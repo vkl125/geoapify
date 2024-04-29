@@ -1,0 +1,13 @@
+<div class="map-container" id="my-map" #map>
+    <div class="placeholder"><span class="placeholder-text">The map will be displayed here</span></div>
+</div>
+<button class="button" type="button">current location</button>
+<geoapify-geocoder-autocomplete 
+    [value]="displayValue"
+    [lang]="options.lang"
+    [countryCodes]="options.countryCodes"
+    [position]="options.position"
+    [limit]="options.limit" 
+    (placeSelect)="onPlaceSelected($event)" 
+    (suggestionsChange)="onSuggestionsChanged($event)">
+</geoapify-geocoder-autocomplete>
