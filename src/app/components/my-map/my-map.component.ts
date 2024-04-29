@@ -25,7 +25,7 @@ export class MyMapComponent implements OnInit, AfterViewInit {
       lang: 'en',
       countryCodes: ['us', 'ca', 'hk'],
       position: { lat: 48.096980, lon: 11.555466 },
-      limit: 10000,
+      limit: 100,
     };
   }
 
