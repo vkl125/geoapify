@@ -39,23 +39,9 @@ export class MyMapComponent implements OnInit, AfterViewInit {
     //probably want to save/fetch where user is based on last session.
      this.map = L.map('my-map').setView([48.096980, 11.555466], 15);//22.335594, 114.160622
     // );
-    this.map.on('click', (e) => { 
-      //have context menu showing ? or just create marker?
-      var formpopup = L.popup();
-      const markerIcon = L.icon({
-        iconUrl: `https://api.geoapify.com/v1/icon?size=xx-large&type=awesome&color=%233e9cfe&icon=paw&apiKey=${this.myAPIKey}`,
-        iconSize: [31, 46], // size of the icon
-        iconAnchor: [e.latlng.lat, e.latlng.lng], // point of the icon which will correspond to marker's location
-        popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
-      });
-      //need to modify popup so that we can delete this marker
-      const zooMarkerPopup = L.popup().setContent(`"This is set at ${e.latlng.lat}, ${e.latlng.lng}`);
-      const zooMarker = L.marker([e.latlng.lat, e.latlng.lng], {//22.335594, 114.160622
-        icon: markerIcon
-      }).bindPopup(zooMarkerPopup).addTo(this.map);
-      //setup API call to save this coordinate marker
-        
-    });
+    this.map.on('click', 
+      (e) => this.onMapClick(e)     
+    );
     // the attribution is required for the Geoapify Free tariff plan
     this.map.attributionControl
       .setPrefix("")
@@ -88,11 +74,36 @@ export class MyMapComponent implements OnInit, AfterViewInit {
         click: this.onMapClick(feature)
     });
   }
-  onMapClick = async (event) => {
-    var popup = L.popup()
-    .setLatLng(event)
-    .setContent('<p>Hello world!<br />This is a nice popup.</p>')
-    .openOn(this.map);
+  onMapClick = async (e) => {
+      const response = await fetch(`https://api.geoapify.com/v1/geocode/reverse?lat=${e.latlng.lat}&lon=${e.latlng.lng}&apiKey=${this.myAPIKey}`);
+      const data = await response.json();     
+      console.log(data); 
+      
+        // if (error) {
+        //   return;
+        // }
+      // if (this.marker && map.hasLayer(this.marker))
+      //   map.removeLayer(this.marker);
+
+      // this.marker = L.marker(result.latlng)
+      //   .addTo(map)
+      //   .bindPopup(result.address.Match_addr)
+      //   .openPopup();
+      
+      //have context menu showing ? or just create marker?
+      // var formpopup = L.popup();
+      // const markerIcon = L.icon({
+      //   iconUrl: `https://api.geoapify.com/v1/icon?size=xx-large&type=awesome&color=%233e9cfe&icon=paw&apiKey=${this.myAPIKey}`,
+      //   iconSize: [31, 46], // size of the icon
+      //   iconAnchor: [e.latlng.lat, e.latlng.lng], // point of the icon which will correspond to marker's location
+      //   popupAnchor: [0, -45] // point from which the popup should open relative to the iconAnchor
+      // });
+      // //need to modify popup so that we can delete this marker
+      // const zooMarkerPopup = L.popup().setContent(`"This is set at ${e.latlng.lat}, ${e.latlng.lng}`);
+      // const zooMarker = L.marker([e.latlng.lat, e.latlng.lng], {//22.335594, 114.160622
+      //   icon: markerIcon
+      // }).bindPopup(zooMarkerPopup).addTo(this.map);
+      //setup API call to save this coordinate marker
   }
   //current location
   currentLocation = async () => {
