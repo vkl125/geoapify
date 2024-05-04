@@ -13,7 +13,7 @@ import { GeoapifyGeocoderAutocompleteModule } from '@geoapify/angular-geocoder-a
   imports: [
     BrowserModule,
     AppRoutingModule,
-    GeoapifyGeocoderAutocompleteModule.withConfig('0c04a07dfc3e449c9b0d3967063aa889')
+  GeoapifyGeocoderAutocompleteModule.withConfig('0c04a07dfc3e449c9b0d3967063aa889')
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,6 +16,7 @@ export class MyMapComponent implements OnInit, AfterViewInit {
   public displayValue: string;
   private map: L.Map;
   public options: GeocoderAutocompleteOptions;
+  public markers: L.Marker[] = [];
   constructor(
   ) { 
     this.options = {
@@ -62,9 +63,13 @@ export class MyMapComponent implements OnInit, AfterViewInit {
     });
 
     const zooMarkerPopup = L.popup().setContent("This is Munich Zoo");
-    const zooMarker = L.marker([48.096980, 11.555466], {//22.335594, 114.160622
+    this.markers.push(L.marker([48.096980, 11.555466], {//22.335594, 114.160622
       icon: markerIcon
-    }).bindPopup(zooMarkerPopup).addTo(this.map);
+    }));
+    this.markers.forEach((marker) => {
+      // need work for popup logic
+      marker.bindPopup(zooMarkerPopup).addTo(this.map);
+    })
 
   }
   //map click
@@ -82,12 +87,12 @@ export class MyMapComponent implements OnInit, AfterViewInit {
         // if (error) {
         //   return;
         // }
-      // if (this.marker && map.hasLayer(this.marker))
-      //   map.removeLayer(this.marker);
+      if (this.markers && this.map.hasLayer(this.markers[0]))
+        this.map.removeLayer(this.markers[0]);
 
-      // this.marker = L.marker(result.latlng)
-      //   .addTo(map)
-      //   .bindPopup(result.address.Match_addr)
+      // this.marker = L.marker(data.latlng)
+      //   .addTo(this.map)
+      //   .bindPopup(data.address.Match_addr)
       //   .openPopup();
       
       //have context menu showing ? or just create marker?
